@@ -1,0 +1,8 @@
+main_app:
+  title: "Santiago Gonzalez App 0.1"
+  width: 1200
+  height: 800
+  font_family: "Arial"
+  font_size: 14
+  font_color: "#000000"
+  background_color: "#E6E6FA"  # Puedes cambiar este color como quieras
