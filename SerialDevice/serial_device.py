@@ -33,19 +33,29 @@ class SerialDevice:
         m = self.serial_device.readline()
         print(m.decode())
 
-        
-    def send_message(self, message:str)->str:
+    def send_message(self, message: str) -> str:
+        print(f"Enviando al Arduino: {message.strip()}")
         self.serial_device.write(message.encode())
-        time.sleep(1)
-        return self.read_message()
+
+        time.sleep(2) #modificar en caso necesario.
+
+        response = self.read_message()
+        return response
+
 
     def read_message(self) -> str:
         try:
-            response = self.serial_device.readline().decode(errors='ignore')
-            return response
+            print("Esperando respuesta del Arduino...")
+            if self.serial_device.in_waiting > 0:
+                response = self.serial_device.readline().decode(errors='ignore').strip()
+                print(f"Respuesta recibida: {response}")
+                return response
+            else:
+                print(" No hay datos disponibles en el buffer del puerto serial.")
+                return "Sin datos recibidos"
         except Exception as e:
             print(f"[ERROR] al leer desde el Arduino: {e}")
-            return ""
+            return "Error al leer"
 
     def receive_message(self)->str:
         return self.serial_device.readline().decode()
