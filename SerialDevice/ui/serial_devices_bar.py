@@ -17,12 +17,10 @@ class SerialDeviceBar(Frame):
         self.arduino = None
         self.config = master.config if hasattr(master, 'config') else {}  # obtiene config del MainApp
 
-        #AQUI VA TU BLOQUE
         ui = self.config.get('ui', {})
         font_cfg  = (ui.get('font_family', 'Arial'), ui.get('font_size', 14))
         font_color = ui.get('font_color', '#000000')
 
-        # Configuración de colores desde YAML
         buttons_cfg = self.config.get('ui', {}).get('buttons', {})
 
         send_cfg = buttons_cfg.get('send', {})
@@ -33,7 +31,6 @@ class SerialDeviceBar(Frame):
         input_cfg = textboxes_cfg.get('input', {})
         output_cfg = textboxes_cfg.get('output', {})
 
-        # === Estilo para Combobox ===
         style = Style()
         style.configure("CustomCombobox.TCombobox",
                         foreground=font_color,
@@ -42,7 +39,6 @@ class SerialDeviceBar(Frame):
                         selectforeground=font_color,
                         selectbackground='#E0E0E0')
         
-        # === Widgets ===
         self.serial_devices_label = Label(self, text='Pick a serial port:', font=font_cfg, foreground=font_color)
 
         self.serial_devices_label = Label(
@@ -190,8 +186,6 @@ class SerialDeviceBar(Frame):
             self.textbox_received_message.insert(END, response)
             self.textbox_received_message.config(state='disabled')
 
-            # 5. AHORA sí borrar el contenido del campo de entrada
-            #self.textbox.delete("1.0", END)
 
     def disconnect_arduino(self):
         if self.arduino is not None:
